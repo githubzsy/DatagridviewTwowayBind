@@ -1,6 +1,7 @@
 ﻿using Model;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -9,7 +10,7 @@ using System.Windows.Forms;
 
 namespace WinFormsApp1
 {
-    public class DataBinder<T> where T: SourceBase
+    public class GridViewDataBinder<T> where T: class
     {
         private DataGridView dgv;
 
@@ -20,15 +21,20 @@ namespace WinFormsApp1
         /// </summary>
         Dictionary<PropertyInfo, ColumnAttribute> dic = new Dictionary<PropertyInfo, ColumnAttribute>();
 
-        public DataBinder(DataGridView dgv, BindingCollection<T> collection)
+        public GridViewDataBinder(DataGridView dgv, BindingCollection<T> collection)
         {
             this.dgv = dgv;
             this.data = collection;
             foreach (var property in typeof(T).GetProperties())
             {
-                var attributes= property.GetCustomAttributes(typeof(ColumnAttribute), true);
-                if (attributes != null && attributes.Length > 0 && attributes[0] is ColumnAttribute attr)
+                // 查询当前是否有Column特性
+                if (property.GetCustomAttribute(typeof(ColumnAttribute), true) is ColumnAttribute attr)
                 {
+                    // 若特性上没有标题文字信息则继续查找Description特性
+                    if (attr.HeaderText == null && property.GetCustomAttribute(typeof(DescriptionAttribute), true) is DescriptionAttribute attr2)
+                    {
+                        attr.HeaderText = attr2.Description;
+                    }
                     dic.Add(property, attr);
                 }
             }
@@ -54,7 +60,7 @@ namespace WinFormsApp1
                 }
                 column.HeaderText = keyValue.Value.HeaderText;
                 column.DataPropertyName = keyValue.Key.Name;
-                
+                dgv.Columns.Clear();
                 dgv.Columns.Add(column);
             }
         }
@@ -64,15 +70,17 @@ namespace WinFormsApp1
         /// </summary>
         public void DeleteSelectedRows()
         {
-            if (!typeof(SourceCanSelected).IsAssignableFrom(typeof(T)))
+            var keyValue = dic.SingleOrDefault(a => a.Value.IsRowCheckbox == true);
+            // 获取IsRowCheckbox标注的列
+            var property = keyValue.Key;
+            if (property == null)
             {
                 return;
             }
-
             var removeRows = new HashSet<T>();
             foreach (var item in data)
             {
-                if((item as SourceCanSelected).RowSelected)
+                if ((bool)property.GetValue(item))
                 {
                     removeRows.Add(item);
                 }

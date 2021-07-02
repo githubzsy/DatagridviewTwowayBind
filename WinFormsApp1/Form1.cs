@@ -19,7 +19,7 @@ namespace WinFormsApp1
             students = new BindingCollection<Student>();
         }
         BindingCollection<Student> students;
-        DataBinder<Student> dataBinder;
+        GridViewDataBinder<Student> dataBinder;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -34,7 +34,7 @@ namespace WinFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var student=  dataBinder.AddRow();
+            var student = dataBinder.AddRow();
             student.Id = Guid.NewGuid();
         }
     }
