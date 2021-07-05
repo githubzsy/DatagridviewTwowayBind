@@ -33,6 +33,7 @@ namespace WinFormsApp1
             this.button1 = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.dgvStudent = new System.Windows.Forms.DataGridView();
+            this.btnSubmit = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -49,6 +50,7 @@ namespace WinFormsApp1
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.btnSubmit);
             this.splitContainer1.Panel1.Controls.Add(this.button1);
             this.splitContainer1.Panel1.Controls.Add(this.btnDelete);
             // 
@@ -92,6 +94,16 @@ namespace WinFormsApp1
             this.dgvStudent.Size = new System.Drawing.Size(800, 366);
             this.dgvStudent.TabIndex = 0;
             // 
+            // btnSubmit
+            // 
+            this.btnSubmit.Location = new System.Drawing.Point(236, 31);
+            this.btnSubmit.Name = "btnSubmit";
+            this.btnSubmit.Size = new System.Drawing.Size(94, 29);
+            this.btnSubmit.TabIndex = 2;
+            this.btnSubmit.Text = "提交";
+            this.btnSubmit.UseVisualStyleBackColor = true;
+            this.btnSubmit.Click += new System.EventHandler(this.btnSubmit_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -116,6 +128,7 @@ namespace WinFormsApp1
         private System.Windows.Forms.DataGridView dgvStudent;
         private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnSubmit;
     }
 }
 

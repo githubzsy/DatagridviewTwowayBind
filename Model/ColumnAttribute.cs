@@ -10,7 +10,7 @@ namespace Model
     /// 标注当前列的显示文字
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class ColumnAttribute:Attribute
+    public class ColumnAttribute : Attribute
     {
         /// <summary>
         /// 当前列是否为行选择Checkbox
@@ -28,15 +28,23 @@ namespace Model
         public string HeaderText { get; set; }
 
         /// <summary>
+        /// 列类型
+        /// </summary>
+        public ColumnType ColumnType { get; set; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="headerText">当前列文字</param>
         /// <param name="isRowChecked">当前列是否为行选择Checkbox(默认为否)</param>
-        public ColumnAttribute(int order = 101, bool isRowChecked = false, string headerText=null)
+        /// <param name="columnType">当前列类型(默认为Textbox)</param>
+        /// <param name="order">当前列顺序(越小越靠前)</param>
+        public ColumnAttribute(int order = 101, string headerText = null, ColumnType columnType = ColumnType.TextBox, bool isRowChecked = false)
         {
             IsRowCheckbox = isRowChecked;
             Order = order;
             HeaderText = headerText;
+            ColumnType = columnType;
         }
 
     }

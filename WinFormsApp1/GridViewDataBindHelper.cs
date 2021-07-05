@@ -10,7 +10,7 @@ namespace WinFormsApp1
 {
     public static class GridViewDataBindHelper
     {
-        public static GridViewDataBinder<T> Bind<T>(this DataGridView dataGridView,BindingCollection<T> data) where T:class
+        public static GridViewDataBinder<T> Bind<T>(this DataGridView dataGridView,BindingCollection<T> data) where T:Audited
         {
             return new GridViewDataBinder<T>(dataGridView,data);
         } 
